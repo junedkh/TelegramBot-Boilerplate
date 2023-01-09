@@ -145,8 +145,3 @@ def run_async_in_thread(func: Callable) -> Callable:
     	return await loop.run_in_executor(None, new_event_loop, func(*args, **kwargs))
     return wrapper
 
-
-
-
-
-
