@@ -1,5 +1,5 @@
 from TelegramBot.helpers.functions import get_readable_bytes
-from TelegramBot.helpers.decorators import sudo_commands, ratelimiter
+from TelegramBot.helpers.decorators import sudo_commands, ratelimiter, run_sync_in_thread
 from TelegramBot.logging import LOGGER
 from pyrogram import filters, Client
 from pyrogram.types import Message
@@ -7,6 +7,8 @@ from TelegramBot.config import prefixes
 from speedtest import Speedtest
 from TelegramBot import loop
 
+
+@run_sync_in_thread
 def speedtestcli():
     test = Speedtest()
     test.get_best_server()
@@ -26,7 +28,7 @@ async def speedtest(_, message: Message):
     """
     speed = await message.reply("Running speedtest....", quote=True)
     LOGGER(__name__).info("Running speedtest....")
-    result = await loop.run_in_executor(None, speedtestcli)
+    result = await speedtestcli()
 	
     photo = result["share"]
     speed_string = f"""
