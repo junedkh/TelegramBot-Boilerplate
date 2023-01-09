@@ -6,6 +6,7 @@ from typing import Callable, Union
 from cachetools import TTLCache
 from functools import wraps
 from pyrogram import Client
+import asyncio
 
 
 ratelimit = RateLimiter()
@@ -96,6 +97,11 @@ def errors(func: Callable) -> Callable:
     return decorator
 
 
+#=========================================================================================
+#SOME MORE USEFUL DECORATORS
+
+from TelegramBot import loop
+
 def run_sync_in_thread(func: Callable) -> Callable:
     """
     A decorator for running a synchronous long running function asynchronously in a seperate thread,
@@ -105,7 +111,7 @@ def run_sync_in_thread(func: Callable) -> Callable:
     in your program and can use it along with await keyword. This will allow the function to be run asynchronously, 
     and avoid blocking of the main event loop.
     
-    
+    Usage Example :- https://github.com/sanjit-sinha/TelegramBot-Boilerplate/blob/a28dc431eaefb45cdf053498711fa7246c65067b/TelegramBot/plugins/sudo/speedtest.py#L31
     """
 
     @wraps(func)
